@@ -5,14 +5,15 @@ from langchain_community.document_loaders import Docx2txtLoader, WebBaseLoader
 from langchain.chains import RetrievalQA
 import os
 import pickle
+from dotenv import load_dotenv
 
-# load_dotenv()
+#load_dotenv()
 
 # Initialize state variables 
 if "question_asked" not in st.session_state:
     st.session_state.question_asked = False
 if "predefined_query" not in st.session_state:
-    st.session_state.predefined_query = False
+    st.session_state.predefined_query = None
 
 # Use the below option for cloud-based or web applications 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
@@ -102,21 +103,21 @@ query_mapping = {
 }
 
 # Show buttons only if no question has been asked
-if "question_asked" not in st.session_state:
-    st.write("Want to know more about specific information, click the buttons below:")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        if st.button("Scholarships"):
-            st.session_state.predefined_query = "scholarships"
-            st.session_state.question_asked = True
-    with col2:
-        if st.button("Career Opportunities"):
-            st.session_state.predefined_query = "career"
-            st.session_state.question_asked = True
-    with col3:
-        if st.button("Electives"):
-            st.session_state.predefined_query = "electives"
-            st.session_state.question_asked = True
+#if not st.session_state.question_asked:
+st.write("Want to know more about specific information, click the buttons below:")
+col1, col2, col3 = st.columns(3)
+with col1:
+    if st.button("Scholarships"):
+        st.session_state.predefined_query = "scholarships"
+        st.session_state.question_asked = True
+with col2:
+    if st.button("Career Opportunities"):
+        st.session_state.predefined_query = "career"
+        st.session_state.question_asked = True
+with col3:
+    if st.button("Electives"):
+        st.session_state.predefined_query = "electives"
+        st.session_state.question_asked = True
 
 # Handle responses (Updated for FAISS)
 def handle_query(query, db_selector):
