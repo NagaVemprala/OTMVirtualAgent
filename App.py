@@ -9,12 +9,10 @@ import os
 
 # Use the below option for cloud-based or web applications 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
-st.write("OPENAI_API_KEY")
-st.write(OPENAI_API_KEY)
 
 embeddings = OpenAIEmbeddings()
 st.write("Getting the chat model ready ...")
-chat = ChatOpenAI(temperature=0.7, model_name="gpt-4o")
+chat = ChatOpenAI(api_key=OPENAI_API_KEY, temperature=0.7, model_name="gpt-4o")
 st.write("Initialization complete.")
 
 # Configuration (Updated for FAISS)
