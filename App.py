@@ -101,7 +101,7 @@ query_mapping = {
 }
 
 # Show buttons only if no question has been asked
-if not st.session_state.question_asked:
+if "question_asked" not in st.session_state:
     st.write("Want to know more about specific information, click the buttons below:")
     col1, col2, col3 = st.columns(3)
     with col1:
