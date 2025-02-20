@@ -7,12 +7,18 @@ import os
 
 # load_dotenv()
 
+# Initialize state variables 
+if "question_asked" not in st.session_state:
+    st.session_state.question_asked = False
+if "predefined_query" not in st.session_state:
+    st.session_state.predefined_query = False
+
 # Use the below option for cloud-based or web applications 
 OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
-embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
+embeddings = OpenAIEmbeddings()
 st.write("Getting the chat model ready ...")
-chat = ChatOpenAI(api_key=OPENAI_API_KEY, temperature=0.7, model_name="gpt-4o")
+chat = ChatOpenAI(temperature=0.7, model_name="gpt-4o")
 st.write("Initialization complete.")
 
 # Configuration (Updated for FAISS)
@@ -68,7 +74,7 @@ def process_documents():
                     loader = WebBaseLoader(url)
                     documents = loader.load()
                     all_url_docs.extend(documents)
-                    st.success(f"Processed URL: {url}")
+                    #st.success(f"Processed URL: {url}")
                 except Exception as e:
                     st.error(f"Error processing {url}: {e}")
             if all_url_docs:
