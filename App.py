@@ -4,6 +4,7 @@ from langchain.vectorstores import FAISS
 from langchain_community.document_loaders import Docx2txtLoader, WebBaseLoader
 from langchain.chains import RetrievalQA
 import os
+import pickle
 
 # load_dotenv()
 
@@ -39,10 +40,10 @@ URLS = [
 ]
 
 def get_faiss_db():  # Updated function name
-    return FAISS.load_local(FAISS_DIR, embeddings)  # Load FAISS from disk
+    return FAISS.load_local(FAISS_DIR, embeddings, allow_dangerous_deserialization=True)  # Load FAISS from disk
 
 def get_url_faiss_db():  # Updated function name
-    return FAISS.load_local(URL_FAISS_DIR, embeddings)
+    return FAISS.load_local(URL_FAISS_DIR, embeddings, allow_dangerous_deserialization=True)
 
 def process_documents():
     """Process documents and URLs into separate FAISS DBs"""
