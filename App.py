@@ -20,7 +20,7 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 embeddings = OpenAIEmbeddings()
 st.write("Getting the chat model ready ...")
-chat = ChatOpenAI(temperature=0.7, model_name="gpt-4o")
+chat = ChatOpenAI(temperature=0.7, model_name="gpt-3.5-turbo")
 st.write("Initialization complete.")
 
 # Configuration (Updated for FAISS)
@@ -97,9 +97,9 @@ submit_btn = st.button("Submit")
 
 # Predefined queries handling
 query_mapping = {
-    "scholarships": "Can you give me what scholarships are available",
-    "career": "Can you tell me about career opportunities",
-    "electives": "Can you provide information about electives"
+    "scholarships": "What scholarships are available?",
+    "career": "What are the career opportunities?",
+    "electives": "What electives can I take?"
 }
 
 # Show buttons only if no question has been asked
@@ -126,7 +126,7 @@ def handle_query(query, db_selector):
         qa = RetrievalQA.from_chain_type(
             llm=chat,
             chain_type="stuff",
-            retriever=db.as_retriever(search_kwargs={"k": 3}),
+            retriever=db.as_retriever(search_kwargs={"k": 1}),
         )
         response = qa.invoke(query)['result']
         st.success("AI response --- ")
